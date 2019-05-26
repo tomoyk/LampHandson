@@ -26,3 +26,18 @@ Linuxの環境をWindows上にインストールした仮想化ソフトウェ�
 ### [8] WindowsへSSHクライアントのインストール
 
 ### [9] WindowsからLinuxへSSH接続
+
+## まとめ
+
+やったこと:
+
+- VMWare Workstation Playerのインストール
+- 仮想マシンへLinuxのインストール
+- WindowsへSSHクライアントソフトウェアをインストール
+- WindowsからLinuxへSSH接続
+
+キーワード:
+
+- 仮想化
+- Linux
+- SSH
