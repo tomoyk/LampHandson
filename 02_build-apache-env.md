@@ -143,7 +143,7 @@ May 27 14:13:26 saba systemd[1]: Started The Apache HTTP Server.
 
 ### [4] Apache HTTP Serverの動作をLinuxコマンドで確認
 
-#### ポートについて
+#### ◯ポートについて
 
 コンピュータがネットワークで接続された他のコンピュータとやり取りを行うには、データ（パケット）の出入りが必要です。この出入り口はポートと呼ばれます。
 
@@ -156,7 +156,7 @@ May 27 14:13:26 saba systemd[1]: Started The Apache HTTP Server.
 
 [RFC 1340](https://tools.ietf.org/html/rfc1340#page-9)
 
-#### 開いているポートの確認
+#### ◯開いているポートの確認
 
 ```shell
 $ ss -anut | grep LISTEN
@@ -166,11 +166,11 @@ tcp  LISTEN 0      128                                     *:80               *:
 tcp  LISTEN 0      128                                  [::]:22            [::]:*                                                     
 ```
 
-#### プロセスについて
+#### ◯プロセスについて
 
 あああ
 
-#### 稼働プロセスの確認
+#### ◯稼働プロセスの確認
 
 ```shell
 $ ps aux | grep apache
@@ -188,23 +188,23 @@ TODO: スクショ
 
 ### [6] 表示されるページを内容を変更
 
-#### VSCode + SSH
+#### ◯VSCode + SSH
 
-#### HTML
+#### ◯HTML
 
-#### CSS
+#### ◯CSS
 
 ### [7] Apache HTTP Serverの設定変更
 
-#### [7-0] portを変更
+#### ◯portを変更
 
-#### [7-1] configテストを行う
+#### ◯configテストを行う
 
 ```shell
 $ apachectl configtest
 ```
 
-#### [7-2] restart
+#### ◯再起動
 
 再起動の前後で比較できるコマンド例を貼る
 
