@@ -224,7 +224,7 @@ VMWare Workstation Playerを起動します。
 
 情報リテラシー(演習?)の復習がてらコマンドラインでの操作を確認してみてください。
 
-```
+```shell
 $ mkdir 100 200 300
 $ touch aaa bbb ccc
 $ ls -lh
