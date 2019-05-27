@@ -222,6 +222,35 @@ VMWare Workstation Playerを起動します。
 
 ### [7] Linuxコマンドによるファイル操作
 
+情報リテラシー(演習?)の復習がてらコマンドラインでの操作を確認してみてください。
+
+```
+$ mkdir 100 200 300
+$ touch aaa bbb ccc
+$ ls -lh
+drwxrwxr-x 2 john john 4.0K May 27 13:43 100
+drwxrwxr-x 2 john john 4.0K May 27 13:43 200
+drwxrwxr-x 2 john john 4.0K May 27 13:43 300
+-rw-rw-r-- 1 john john    0 May 27 13:43 aaa
+-rw-rw-r-- 1 john john    0 May 27 13:43 bbb
+-rw-rw-r-- 1 john john    0 May 27 13:43 ccc
+$ mv -v bbb 200 300
+$ wget https://www.yahoo.co.jp/
+--2019-05-27 13:45:42--  https://www.yahoo.co.jp/
+Resolving www.yahoo.co.jp (www.yahoo.co.jp)... 183.79.217.124
+Connecting to www.yahoo.co.jp (www.yahoo.co.jp)|183.79.217.124|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [text/html]
+Saving to: ‘index.html’
+
+index.html              [ <=>                ]  17.65K  --.-KB/s    in 0.01s   
+
+2019-05-27 13:45:43 (1.69 MB/s) - ‘index.html’ saved [18071]
+
+$ grep -r error /var/log/syslog
+May 27 22:13:34 saba snapd[1214]: 2019/05/27 22:13:34.052607 helpers.go:119: error trying to compare the snap system key: system-key missing on disk
+```
+
 ## まとめ
 
 やったこと:
