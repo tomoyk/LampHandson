@@ -165,7 +165,7 @@ VMWare Workstation Playerを起動します。
 
 <img src="images/01/vmware20.png">
 
-警告が出るので「Continue」を選択します。
+確認が出るので「Continue」を選択します。
 
 <img src="images/01/vmware21.png">
 
@@ -182,7 +182,7 @@ VMWare Workstation Playerを起動します。
 
 <img src="images/01/vmware23.png">
 
-追加でのソフトウェアはないので、「Done」を選択します。
+追加ソフトウェアはないので、「Done」を選択します。
 
 <img src="images/01/vmware24.png">
 
@@ -206,17 +206,20 @@ VMWare Workstation Playerを起動します。
 
 <img src="images/01/vmware29.png">
 
-ログインに成功すると以下の画面が表示されます。表示されている文字列の中から「**IP address for ens33: ...**」を探してメモします。
+ログインに成功すると以下の画面が表示されます。表示されている文字列の中からIPアドレス「**IP address for ens33: ...**」を探してメモします。
 
-以下の例では「192.168.88.129」をメモします。
+以下の例ではIPアドレス「192.168.88.129」をメモします。
 
 <img src="images/01/vmware30.png">
 
 ### [6] WindowsからLinuxへSSH接続
 
 ここまでの手順で 仮想マシンの作成、OSのインストール を行いました。これによって仮想マシン上にLinuxサーバーを構築しました。
-
 ここからはWindowsからLinuxサーバーへ接続してコマンドラインでの操作を行います。
+
+WindowsのスタートメニューからPowershellを起動します。表示されたウィンドウで `ssh （ユーザ名）@（IPアドレス）` を入力してEnterを押します。
+
+以下の例の場合: `$ ssh john@192.168.88.129`
 
 <img src="images/01/ssh01.png">
 

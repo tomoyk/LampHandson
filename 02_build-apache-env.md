@@ -42,7 +42,7 @@ $ sudo apt -y install apache2
 
 インストールすると直後にWebサーバーが起動します。
 
-#### 現在の状態: `$ sudo systemctl status apache2`
+#### ★現在の状態: `$ sudo systemctl status apache2`
 
 ```shell
 $ sudo systemctl status apache2
@@ -63,7 +63,7 @@ May 27 14:04:07 saba apachectl[14763]: AH00558: apache2: Could not reliably dete
 May 27 14:04:07 saba systemd[1]: Started The Apache HTTP Server.
 ```
 
-#### 停止: `$ sudo systemctl stop apache2`
+#### ★停止: `$ sudo systemctl stop apache2`
 
 試しにAoache HTTP Serverを停止してみます。
 
@@ -87,7 +87,7 @@ May 27 14:07:01 saba apachectl[15040]: AH00558: apache2: Could not reliably dete
 May 27 14:07:01 saba systemd[1]: Stopped The Apache HTTP Server.
 ```
 
-#### 起動: `$ sudo systemctl start apache2`
+#### ★起動: `$ sudo systemctl start apache2`
 
 停止していたApache HTTP Serverを起動してみます。
 
@@ -114,7 +114,7 @@ May 27 14:11:02 saba apachectl[15065]: AH00558: apache2: Could not reliably dete
 May 27 14:11:02 saba systemd[1]: Started The Apache HTTP Server.
 ```
 
-#### 再起動: `$ sudo systemctl restart apache2`
+#### ★再起動: `$ sudo systemctl restart apache2`
 
 Apache HTTP Serverを再起動してみます。
 
@@ -165,6 +165,10 @@ tcp  LISTEN 0      128                               0.0.0.0:22         0.0.0.0:
 tcp  LISTEN 0      128                                     *:80               *:*                                                                               
 tcp  LISTEN 0      128                                  [::]:22            [::]:*                                                     
 ```
+
+結果の見方:
+
+あああ
 
 #### ★プロセスについて
 
