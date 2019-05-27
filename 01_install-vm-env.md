@@ -149,7 +149,7 @@ VMWare Workstation Playerを起動します。
 
 <img src="images/01/vmware16.png">
 
-ミラーサーバーの設定を理研に変更します。Mirror addressへ「**http://ftp.riken.go.jp/Linux/ubuntu/**」を入力して「Done」を選択します。理研以外のミラーサーバーの一覧は [ここ](https://www.ubuntulinux.jp/ubuntu/mirrors) から確認できます。
+ミラーサーバーの設定を理研に変更します。Mirror addressへ「`http://ftp.riken.go.jp/Linux/ubuntu/`」を入力して「Done」を選択します。理研以外のミラーサーバーの一覧は [ここ](https://www.ubuntulinux.jp/ubuntu/mirrors) から確認できます。
 
 <img src="images/01/vmware17.png">
 
