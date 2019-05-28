@@ -10,7 +10,7 @@
 
 ### [1] システムのアップデート
 
-システムのアップデートを行います。
+システムのアップデートを行います。WindowsでのWindows Updateをイメージすると分かりやすいと思います。
 
 ```shell
 $ sudo apt update
@@ -40,9 +40,19 @@ $ sudo apt -y install apache2
 
 ### [3] Apache HTTP Serverの起動・停止・再起動
 
-インストールすると直後にWebサーバーが起動します。
+Apache HTTP Serverをはじめとする各種サーバーの操作には `systemctl` コマンドを使います。このコマンドは **systemd** を操作します。systemdとはシステム管理するソフトウェアのことです。
+
+systemdの説明をすると長くなるので、ここでは以下の点を理解しておいてください。
+
+- systemdはシステムを管理するソフトウェア
+- systemctlコマンドを使ってsystemdを操作
+- Apache HTTP Serverの起動、停止、再起動に systemctlコマンド を使う
+
+[systemd超入門 ｜ DevelopersIO](https://dev.classmethod.jp/cloud/aws/systemd-getting-started/)
 
 #### ★現在の状態: `$ sudo systemctl status apache2`
+
+インストールした直後はApache HTTP Serverは起動しています。起動しているか確認してみます。
 
 ```shell
 $ sudo systemctl status apache2
@@ -63,9 +73,15 @@ May 27 14:04:07 saba apachectl[14763]: AH00558: apache2: Could not reliably dete
 May 27 14:04:07 saba systemd[1]: Started The Apache HTTP Server.
 ```
 
+起動していることが以下の行から分かります。
+
+```
+Active: active (running) since Mon 2019-05-27 14:04:07 UTC; 1min 50s ago
+```
+
 #### ★停止: `$ sudo systemctl stop apache2`
 
-試しにAoache HTTP Serverを停止してみます。
+次に起動しているApache HTTP Serverを試しに停止してみます。
 
 ```shell:
 $ sudo systemctl stop apache2
@@ -85,6 +101,12 @@ May 27 14:04:07 saba systemd[1]: Started The Apache HTTP Server.
 May 27 14:07:01 saba systemd[1]: Stopping The Apache HTTP Server...
 May 27 14:07:01 saba apachectl[15040]: AH00558: apache2: Could not reliably dete
 May 27 14:07:01 saba systemd[1]: Stopped The Apache HTTP Server.
+```
+
+停止したことが以下の行から確認できます。
+
+```
+Active: inactive (dead) since Mon 2019-05-27 14:07:01 UTC; 2min 34s ago
 ```
 
 #### ★起動: `$ sudo systemctl start apache2`
