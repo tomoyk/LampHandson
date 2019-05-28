@@ -165,6 +165,85 @@ May 27 14:13:26 saba systemd[1]: Started The Apache HTTP Server.
 
 ### [4] Apache HTTP Serverの動作をLinuxコマンドで確認
 
+#### ★プロセスについて
+
+Linuxでは処理のかたまりをプロセスとよばれる単位で扱います。Apache Traffic Serverを起動するとプロセスが作成されます。コマンドラインで `ls` や `mkdir` とよばれるコマンドを実行する場合もプロセスが作成されます。
+
+#### ★実行中プロセスの確認
+
+ `ps` コマンドは実行されているプロセスを一覧で表示できます。
+
+```shell
+$ ps
+  PID TTY          TIME CMD
+16477 pts/0    00:00:00 bash
+16509 pts/0    00:00:00 ps
+```
+
+ `ps` コマンドにはオプションが多く用意されています。
+一般的なコマンドでは `--help` を末尾につけることで、オプションの一覧を確認できます。詳細な使い方は `man` コマンドで見ることができます。例えば ps コマンドのオプションを調べるには以下のコマンドを実行します。
+
+```
+$ man ps
+PS(1)                                               User Commands                                               PS(1)
+
+NAME
+       ps - report a snapshot of the current processes.
+
+SYNOPSIS
+       ps [options]
+
+DESCRIPTION
+       ps displays information about a selection of the active processes.  If you want a repetitive update of the
+       selection and the displayed information, use top(1) instead.
+
+       This version of ps accepts several kinds of options:
+
+       1   UNIX options, which may be grouped and must be preceded by a dash.
+       2   BSD options, which may be grouped and must not be used with a dash.
+       3   GNU long options, which are preceded by two dashes.
+（略）
+```
+
+コンピュータ・サイエンスには最低限の英語は必要になるので気合いで読んでみましょう。
+
+#### ★演習1. オプションを調べる
+
+有名な `ps` コマンドのオプション組み合わせには `aux` があります。はじめに `ps aux` を入力して実行してみてください。
+
+```
+$ ps aux
+```
+
+オプションの意味を英語から考えてみてください。オプションの有無でコマンドの結果にどのような違いがあるか比較してみてください。
+
+ヒントとして以下にmanの抜粋を貼っておきます。
+
+```
+ a      Lift the BSD-style "only yourself" restriction, which is imposed upon the set of all processes when some BSD-style (without "-") options are used or when the ps personality
+              setting is BSD-like.  The set of processes selected in this manner is in addition to the set of processes selected by other means.  An alternate description is that this
+              option causes ps to list all processes with a terminal (tty), or to list all processes when used together with the x option.
+u      Display user-oriented format.
+x      Lift the BSD-style "must have a tty" restriction, which is imposed upon the set of all processes when some BSD-style (without "-") options are used or when the ps
+        personality setting is BSD-like.  The set of processes selected in this manner is in addition to the set of processes selected by other means.  An alternate description is
+        that this option causes ps to list all processes owned by you (same EUID as ps), or to list all processes when used together with the a option.
+```
+
+#### ★演習2. Apache HTTP Serverの起動を確認
+
+psコマンドの結果からApache HTTP Serverに関するものだけを表示してみます。
+以下が正解のコマンド実行結果です。`grep` コマンドのオプションに入る文字列を自分で考えてみてください。
+
+```shell
+$ ps aux | grep (ここに入る検索文字列を考える)
+root     15173  0.0  0.4  78192  4948 ?        Ss   14:13   0:00 /usr/sbin/apache2 -k start
+www-data 15174  0.0  0.4 1289240 4868 ?        Sl   14:13   0:00 /usr/sbin/apache2 -k start
+www-data 15175  0.0  0.4 1289240 4868 ?        Sl   14:13   0:00 /usr/sbin/apache2 -k start
+john     15251  0.0  0.1  13136  1048 pts/0    S+   14:18   0:00 grep --color=auto apache
+```
+
+余裕のある人はオプションをさらに調べてみてください。例えば、便利なオプションに `f` があります。
+
 #### ★ポートについて
 
 コンピュータがネットワークで接続された他のコンピュータとやり取りを行うには、データ（パケット）の出入りが必要です。この出入り口はポートと呼ばれます。
@@ -191,20 +270,6 @@ tcp  LISTEN 0      128                                  [::]:22            [::]:
 結果の見方:
 
 あああ
-
-#### ★プロセスについて
-
-あああ
-
-#### ★稼働プロセスの確認
-
-```shell
-$ ps aux | grep apache
-root     15173  0.0  0.4  78192  4948 ?        Ss   14:13   0:00 /usr/sbin/apache2 -k start
-www-data 15174  0.0  0.4 1289240 4868 ?        Sl   14:13   0:00 /usr/sbin/apache2 -k start
-www-data 15175  0.0  0.4 1289240 4868 ?        Sl   14:13   0:00 /usr/sbin/apache2 -k start
-john     15251  0.0  0.1  13136  1048 pts/0    S+   14:18   0:00 grep --color=auto apache
-```
 
 ### [5] WebブラウザからApache HTTP Serverへアクセス
 
