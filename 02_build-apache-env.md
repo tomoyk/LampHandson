@@ -229,6 +229,39 @@ x      Lift the BSD-style "must have a tty" restriction, which is imposed upon t
         that this option causes ps to list all processes owned by you (same EUID as ps), or to list all processes when used together with the a option.
 ```
 
+コマンドの実行結果の見方について説明します。
+
+```
+$ ps aux | head
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  0.9 225464  9268 ?        Ss   May27   0:07 /lib/systemd/systemd --system --deserialize 35
+root         2  0.0  0.0      0     0 ?        S    May27   0:00 [kthreadd]
+root         4  0.0  0.0      0     0 ?        I<   May27   0:00 [kworker/0:0H]
+root         6  0.0  0.0      0     0 ?        I<   May27   0:00 [mm_percpu_wq]
+root         7  0.0  0.0      0     0 ?        S    May27   0:00 [ksoftirqd/0]
+root         8  0.0  0.0      0     0 ?        I    May27   0:15 [rcu_sched]
+root         9  0.0  0.0      0     0 ?        I    May27   0:00 [rcu_bh]
+root        10  0.0  0.0      0     0 ?        S    May27   0:00 [migration/0]
+root        11  0.0  0.0      0     0 ?        S    May27   0:00 [watchdog/0]
+```
+
+各カラムの意味は左から順に以下です。
+
+|項目   |説明|
+|---    |---|
+|USER   |実行ユーザ|
+|PID    |プロセスID|
+|%CPU   |CPUの使用率|
+|%MEM   |メモリの使用率|
+|VSZ    |仮想メモリの使用量|
+|RSS    |物理メモリの使用量|
+|TTY    |標準出力されるデバイス|
+|STAT   |プロセスの状態|
+|TIME   |CPU実行時間|
+|COMMAND|実行コマンド|
+
+[ttyとかptsとかについて確認してみる - Qiita](https://qiita.com/toshihirock/items/22de12f99b5c40365369)
+
 #### ★演習2. Apache HTTP Serverの起動を確認
 
 psコマンドの結果からApache HTTP Serverに関するものだけを表示してみます。
@@ -244,12 +277,21 @@ john     15251  0.0  0.1  13136  1048 pts/0    S+   14:18   0:00 grep --color=au
 
 余裕のある人はオプションをさらに調べてみてください。例えば、便利なオプションに `f` があります。
 
+#### ★演習3. Apache HTTP Serverを停止してみる
+
+Apache HTTP Serverをsystemctlコマンドを使って停止させてください。その後に `ps` コマンドを使ってプロセス一覧からApache HTTP Serverのプロセスを探してみてください。
+
+コマンドの実行結果を演習2と比較して考察してみてください。以下のポイントを参考にしてみてください。
+
+- Apache HTTP Serverを起動すると `ps` コマンドの結果はどうか?
+- Apache HTTP Serverを停止すると `ps` コマンドの結果はどうか?
+- systemctlコマンドは何をしているのか?
+
 #### ★ポートについて
 
 コンピュータがネットワークで接続された他のコンピュータとやり取りを行うには、データ（パケット）の出入りが必要です。この出入り口はポートと呼ばれます。
 
-ポートには0〜65535の範囲で番号が割り当てられています。一般にHTTPでは80番(TCP), HTTPSでは443番(TCP)が利用されます。
-以下のサイトにわかりやすいイラストがありました。
+ポートには0〜65535(2^16個)の範囲で番号が割り当てられています。一般にHTTPでは80番(TCP), HTTPSでは443番(TCP)が利用されます。以下のサイトにわかりやすいイラストがありました。
 
 [「ポートとソケットがわかればインターネットがわかる」を書きました:Geekなぺーじ](http://www.geekpage.jp/blog/?id=2016-11-10-1)
 
@@ -259,19 +301,69 @@ john     15251  0.0  0.1  13136  1048 pts/0    S+   14:18   0:00 grep --color=au
 
 #### ★開いているポートの確認
 
+Linuxでプロセスによって使用されているポート一覧を表示するには `ss` コマンドを使います。
+
 ```shell
-$ ss -anut | grep LISTEN
+$ ss 
+Netid  State    Recv-Q   Send-Q                        Local Address:Port                                      Peer Address:Port
+u_str  ESTAB    0        0           /var/run/dbus/system_bus_socket 36291                                                * 36290
+u_str  ESTAB    0        0                                         * 44291                                                * 43800
+u_str  ESTAB    0        0                                         * 68921                                                * 68007
+u_str  ESTAB    0        0               /run/systemd/journal/stdout 144203                                               * 151377
+u_str  ESTAB    0        0                                         * 63738                                                * 63739
+u_str  ESTAB    0        0                                         * 44470                                                * 43903
+u_str  ESTAB    0        0               /run/systemd/journal/stdout 43800                                                * 44291
+u_str  ESTAB    0        0           /var/run/dbus/system_bus_socket 63739                                                * 63738
+u_str  ESTAB    0        0                                         * 18189                                                * 19174
+（略）
+```
+
+実行結果の長いコマンドの結果を見るときは `less` コマンドへパイプすると読みやすくなります。
+
+```
+$ ss | less
+```
+
+`ss` コマンドにも数多くのオプションがあります。よく使われるオプションに `-antu` があります。それぞれの意味は以下です。
+
+- `-a` すべての利用中ポートを表示（すべてのリッスン, ノンリッスンのソケットを表示）
+- `-n`
+- `-t`
+- `-u`
+
+```shell
+$ ss -antu | grep LISTEN
 tcp  LISTEN 0      128                         127.0.0.53%lo:53         0.0.0.0:*                                                                               
 tcp  LISTEN 0      128                               0.0.0.0:22         0.0.0.0:*                                                                               
 tcp  LISTEN 0      128                                     *:80               *:*                                                                               
 tcp  LISTEN 0      128                                  [::]:22            [::]:*                                                     
 ```
 
+### ★演習4. Apache HTTP Serverの起動を確認
+
 結果の見方:
 
 あああ
 
 ### [5] WebブラウザからApache HTTP Serverへアクセス
+
+構築した
+
+```
+$ ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: ens160: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 00:0c:29:ec:5e:b4 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.88.129/24 brd 192.168.0.255 scope global dynamic ens160
+       valid_lft 3424sec preferred_lft 3424sec
+    inet6 fe80::20c:29ff:feec:5eb4/64 scope link
+       valid_lft forever preferred_lft forever
+```
 
 WindowsからWebブラウザを起動して「`http://x.x.x.x/`」へアクセスします。
 
