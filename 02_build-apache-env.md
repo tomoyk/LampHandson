@@ -374,6 +374,25 @@ $ ss | less
 - `-u` UDPのみを表示
 
 ```shell
+$ ss -anut
+Netid            State              Recv-Q             Send-Q                                              Local Address:Port                            Peer Address:Port              
+udp              UNCONN             0                  0                                                   127.0.0.53%lo:53                                   0.0.0.0:*                 
+udp              UNCONN             0                  0                                            192.168.88.129%ens160:68                                   0.0.0.0:*                 
+udp              UNCONN             0                  0                               [fe80::20c:29ff:feec:5eb4]%ens160:546                                     [::]:*                 
+tcp              LISTEN             0                  128                                                 127.0.0.53%lo:53                                   0.0.0.0:*                 
+tcp              LISTEN             0                  128                                                       0.0.0.0:22                                   0.0.0.0:*                 
+tcp              ESTAB              0                  36                                                  192.168.88.129:22                             192.168.88.166:36678             
+tcp              LISTEN             0                  128                                                             *:80                                         *:*                 
+tcp              LISTEN             0                  128                                                          [::]:22                                      [::]:*                 
+```
+
+コマンドの見方:
+
+TODO: かく
+
+リッスン（開放）しているポートは以下のコマンドで確認できます。
+
+```shell
 $ ss -antu | grep LISTEN
 tcp  LISTEN 0      128                         127.0.0.53%lo:53         0.0.0.0:*
 tcp  LISTEN 0      128                               0.0.0.0:22         0.0.0.0:*
@@ -393,15 +412,63 @@ TODO: この説明を書く
 
 #### ★HTMLについて
 
-WebページはHTMLとよばれる言語で記述されています。
+WebページはHTMLとよばれる言語で記述されています。HTMLは**タグ**とよばれる独自の文字列で構成されています。例えば、文章を表現するには `p` タグ(paragraph)を使います。
 
-TODO: 説明をする
+```
+<p>ここに文章を記述します。文章の分量は問われません。</p>
+```
+
+リンクを表現するには `a` タグ(anchor)を使います。
+
+```
+<a href="https://www.yahoo.co.jp/">ヤフーへのリンク</a>
+```
+
+画像の埋め込みには `img` タグ(image)を使います。
+
+```
+<img src="sample.jpg" alt="キリンの画像">
+```
+
+具体的なHTMLの書き換え方を説明します。Webブラウザで表示されるデータは `/var/www/html` に格納されています。ここにある `index.html` が表示されているHTMLファイルです。
 
 ```shell
 $ cd /var/www/html/
 $ cp index.html index.html.bck  # バックアップを取ります
 $ sudo nano index.html  # HTMLを編集します
 ```
+
+トップに表示される見出しを書き換えてみます。
+
+変更前:
+
+```html
+ <body>
+   <div class="main_page">
+   <div class="page_header floating_element">
+      <img src="/icons/ubuntu-logo.png" alt="Ubuntu Logo" class="floating_element"/>
+      <span class="floating_element">
+         Apache2 Ubuntu Default Page
+      </span>
+   </div>
+```
+
+変更後:
+
+```html
+ <body>
+   <div class="main_page">
+   <div class="page_header floating_element">
+      <img src="/icons/ubuntu-logo.png" alt="Ubuntu Logo" class="floating_element"/>
+      <span class="floating_element">
+         Hello LinuxClub
+      </span>
+   </div>
+```
+
+保存は `Ctrl + X` → `y` → Enter で行えます。
+
+Webブラウザから変更されているか確認してください。余裕があれば好きなタグを使ってカスタマイズしてみてください。
 
 ### [7] Apache HTTP Serverの設定変更
 
@@ -420,7 +487,7 @@ $ apachectl configtest
 ```shell
 ```
 
-#### [6-3] web browserからアクセス
+#### ★web browserからアクセス
 
 ## 演習
 
@@ -441,4 +508,3 @@ $ apachectl configtest
 キーワード:
 
 - xxx
-寝る
