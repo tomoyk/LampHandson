@@ -385,11 +385,23 @@ TODO: この説明を書く
 
 ### [6] 表示されるページを内容を変更
 
-#### ★VSCode + SSH
+ブラウザで表示される以下のページを書き換えてみます。
 
-#### ★HTML
+<img src="images/02/chrome-apache.png">
 
-#### ★CSS
+テキストエディタにはnanoを使います。emacsやvimが使える人はそれでも構いません。
+
+#### ★HTMLについて
+
+WebページはHTMLとよばれる言語で記述されています。
+
+TODO: 説明をする
+
+```shell
+$ cd /var/www/html/
+$ cp index.html index.html.bck  # バックアップを取ります
+$ sudo nano index.html  # HTMLを編集します
+```
 
 ### [7] Apache HTTP Serverの設定変更
 
@@ -429,3 +441,4 @@ $ apachectl configtest
 キーワード:
 
 - xxx
+寝る
