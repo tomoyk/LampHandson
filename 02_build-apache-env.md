@@ -30,13 +30,49 @@ Ubuntuには様々なソフトウェアがパッケージによってインス�
 
 今回はUbuntuに導入されているパッケージ管理コマンド apt を利用してパッケージの操作を行います。
 
-### [2] Apache HTTP Serverのインストール
+### [2] Apache HTTP Serverのインストールと動作確認
 
 Webサーバを構築します。今回はサーバーソフトウェアとしてApache HTTP Serverを利用します。Apache HTTP ServerはApacheが提供するWebサーバーソフトウェアの1つです。
 
 ```shell
 $ sudo apt -y install apache2
 ```
+
+#### ★IPアドレスの確認
+
+次に構築したWebサーバーのIPアドレスを確認します。IPアドレスはネットワーク上の住所です。これを使ってやり取り相手を一意に定めることで通信が行えます。
+サーバーのIPアドレスを確認するには `ip` コマンドを使います。オプション `addr` はアドレスを表示します。
+
+```shell
+$ ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: ens160: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 00:0c:29:ec:5e:b4 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.88.129/24 brd 192.168.0.255 scope global dynamic ens160
+       valid_lft 3424sec preferred_lft 3424sec
+    inet6 fe80::20c:29ff:feec:5eb4/64 scope link
+       valid_lft forever preferred_lft forever
+```
+
+ `ip` コマンドの結果はインターフェースとよばれる単位で表示されます。1つ目の `lo` はローカルインターフェースで、コンピュータ自身との通信に使います。
+2つ目の `ens160` が外部との通信に使うインターフェースです。IPアドレスは2つめのインターフェースの `inet` から始まる行に書かれています。
+
+```
+    inet 192.168.88.129/24 brd 192.168.0.255 scope global dynamic ens160
+```
+
+上記の場合、IPアドレスは `192.168.88.129` だと分かります。
+
+#### ★Webブラウザから動作の確認
+
+Webブラウザを起動して確認したIPアドレスを入力します。以下のページが表示されれば正しくApache HTTP Serverが正常に起動しています。
+
+<img src="images/02/chrome-apache.png">
 
 ### [3] Apache HTTP Serverの起動・停止・再起動
 
@@ -109,6 +145,8 @@ May 27 14:07:01 saba systemd[1]: Stopped The Apache HTTP Server.
 Active: inactive (dead) since Mon 2019-05-27 14:07:01 UTC; 2min 34s ago
 ```
 
+試しにWebブラウザを開いて接続ができないことを確かめてみます。
+
 #### ★起動: `$ sudo systemctl start apache2`
 
 停止していたApache HTTP Serverを起動してみます。
@@ -136,6 +174,8 @@ May 27 14:11:02 saba apachectl[15065]: AH00558: apache2: Could not reliably dete
 May 27 14:11:02 saba systemd[1]: Started The Apache HTTP Server.
 ```
 
+再びWebブラウザを開いてページが表示されることを確認します。
+
 #### ★再起動: `$ sudo systemctl restart apache2`
 
 Apache HTTP Serverを再起動してみます。
@@ -162,6 +202,8 @@ May 27 14:13:26 saba systemd[1]: Starting The Apache HTTP Server...
 May 27 14:13:26 saba apachectl[15155]: AH00558: apache2: Could not reliably dete
 May 27 14:13:26 saba systemd[1]: Started The Apache HTTP Server.
 ```
+
+restartは変更した設定を適用する場合に使います。
 
 ### [4] Apache HTTP Serverの動作をLinuxコマンドで確認
 
@@ -326,48 +368,20 @@ $ ss | less
 
 `ss` コマンドにも数多くのオプションがあります。よく使われるオプションに `-antu` があります。それぞれの意味は以下です。
 
-- `-a` すべての利用中ポートを表示（すべてのリッスン, ノンリッスンのソケットを表示）
-- `-n`
-- `-t`
-- `-u`
+- `-a` すべての利用中ポートを表示
+- `-n` ポートを数値で出力
+- `-t` TCPのみを表示
+- `-u` UDPのみを表示
 
 ```shell
 $ ss -antu | grep LISTEN
-tcp  LISTEN 0      128                         127.0.0.53%lo:53         0.0.0.0:*                                                                               
-tcp  LISTEN 0      128                               0.0.0.0:22         0.0.0.0:*                                                                               
-tcp  LISTEN 0      128                                     *:80               *:*                                                                               
-tcp  LISTEN 0      128                                  [::]:22            [::]:*                                                     
+tcp  LISTEN 0      128                         127.0.0.53%lo:53         0.0.0.0:*
+tcp  LISTEN 0      128                               0.0.0.0:22         0.0.0.0:*
+tcp  LISTEN 0      128                                     *:80               *:*
+tcp  LISTEN 0      128                                  [::]:22            [::]:*
 ```
 
-### ★演習4. Apache HTTP Serverの起動を確認
-
-結果の見方:
-
-あああ
-
-### [5] WebブラウザからApache HTTP Serverへアクセス
-
-構築した
-
-```
-$ ip addr
-1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
-    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-    inet 127.0.0.1/8 scope host lo
-       valid_lft forever preferred_lft forever
-    inet6 ::1/128 scope host
-       valid_lft forever preferred_lft forever
-2: ens160: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
-    link/ether 00:0c:29:ec:5e:b4 brd ff:ff:ff:ff:ff:ff
-    inet 192.168.88.129/24 brd 192.168.0.255 scope global dynamic ens160
-       valid_lft 3424sec preferred_lft 3424sec
-    inet6 fe80::20c:29ff:feec:5eb4/64 scope link
-       valid_lft forever preferred_lft forever
-```
-
-WindowsからWebブラウザを起動して「`http://x.x.x.x/`」へアクセスします。
-
-TODO: スクショ
+TODO: この説明を書く
 
 ### [6] 表示されるページを内容を変更
 
