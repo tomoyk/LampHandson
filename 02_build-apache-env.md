@@ -388,6 +388,13 @@ tcp              LISTEN             0                  128                      
 
 コマンドの見方:
 
+- `Netid`
+- `State`
+- `Recv-Q`
+- `Send-Q`
+- `Local AddressLPort`
+- `Peer Address:Port`
+
 ```
 Netid  State      Recv-Q  Send-Q    Local Address:Port       Peer Address:Port  
 tcp    LISTEN     0       128       0.0.0.0:22               0.0.0.0:*
@@ -402,8 +409,6 @@ tcp  LISTEN 0      128                               0.0.0.0:22         0.0.0.0:
 tcp  LISTEN 0      128                                     *:80               *:*
 tcp  LISTEN 0      128                                  [::]:22            [::]:*
 ```
-
-TODO: この説明を書く
 
 ### [6] 表示されるページを内容を変更
 
