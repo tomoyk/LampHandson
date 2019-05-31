@@ -388,6 +388,8 @@ tcp              LISTEN             0                  128                      
 
 コマンドの見方:
 
+TODO: 説明を書く
+
 - `Netid`
 - `State`
 - `Recv-Q`
@@ -478,6 +480,7 @@ $ sudo nano index.html  # HTMLを編集します
 
 Webブラウザから変更されているか確認してください。余裕があれば好きなタグを使ってカスタマイズしてみてください。
 
+<!--
 ### [7] Apache HTTP Serverの設定変更
 
 #### ★portを変更
@@ -516,3 +519,5 @@ $ apachectl configtest
 キーワード:
 
 - xxx
+
+-->
