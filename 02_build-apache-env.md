@@ -388,7 +388,10 @@ tcp              LISTEN             0                  128                      
 
 コマンドの見方:
 
-TODO: かく
+```
+Netid  State      Recv-Q  Send-Q    Local Address:Port       Peer Address:Port  
+tcp    LISTEN     0       128       0.0.0.0:22               0.0.0.0:*
+```
 
 リッスン（開放）しているポートは以下のコマンドで確認できます。
 
