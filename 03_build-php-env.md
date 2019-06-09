@@ -2,23 +2,66 @@
 
 ## 概要
 
-xxx
+PHPの実行環境
 
 ## 手順
 
 ### [1] PHPのパッケージをインストール
 
-### [2] Apacheの設定を変更
+必要なパッケージは依存関係によりインストールされます。
 
-### [3] Apacheの再起動
+```shell
+sudo apt install php
+```
 
-### [4] PHPの動作確認
+### [2] PHPの設定を変更
 
-#### PHPが動く仕組み
+PHPのタイムゾーン設定を変更します。
 
-### [5] PHPでプログラミング
+```shell
+cd /etc/php/7.2/apache2/
+sudo cp php.ini php.ini.bck  # バックアップ
+```
 
-#### [5-1] 現在の時刻を表示
+設定ファイルをnanoエディタで編集します。
+
+```
+$ sudo nano php.ini
+```
+
+変更前:
+
+```
+[Date]
+; Defines the default timezone used by the date functions
+; http://php.net/date.timezone
+;date.timezone =
+```
+
+変更後:
+
+```
+[Date]
+; Defines the default timezone used by the date functions
+; http://php.net/date.timezone
+date.timezone = "Asia/Tokyo"
+```
+
+変更した設定を反映させるために、Apacheを再起動します。
+
+```
+$ sudo systemctl restart apache2
+```
+
+### [3] 時刻を返すWebアプリを作る
+
+サーバーの現在の時刻を表示するWebアプリケーションを作成します。
+
+`/var/www/html/`に以下の内容で`time.php`を作成する。
+
+```
+$ sudo nano /var/www/html/time.php
+```
 
 ```php
 <html>
@@ -27,12 +70,24 @@ xxx
   <title>Current Date</title>
 </head>
 <body>
-<h1><?php date('l jS \of F Y h:i:s A'); ?></h1>
+<h1><?php echo date('l jS \of F Y h:i:s A'); ?></h1>
 </body>
 </html>
 ```
 
-#### [5-2] 簡単なフォーム
+Webブラウザを起動して `http://127.0.0.1/time.php` へアクセスする。
+
+#### ★演習1
+
+ `http://127.0.0.1/time.php` と `http://127.0.0.1/index.html` のそれぞれへアクセスして違いを比較してください。
+
+ヒント: ページを更新するたびに表示される内容がどうなるか？
+
+#### ★演習2
+
+PHPの`date()`関数の日付フォーマットを変更して表示形式を `2019/06/09 23:45` へ変更してみてください。
+
+### [4] 簡易的なWebフォームを作る
 
 ```php
 <?php
